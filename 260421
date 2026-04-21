@@ -1,0 +1,308 @@
+# Git
+Git: 분산 버전 관리 시스템
+ - 소프트웨어 개발 과정에서 소스 코드의 변경 사항을 추적하고 관리하는 데 사용
+
+Git 사용방법
+ - CLI, GUI
+
+
+git 버전 확인
+$ git --versopn
+
+엔터방식으로 인한 오류 방식
+$ git config --global core.autocrlf true
+
+
+git 전역으로 사용자 이름과 이메일 주소 설정
+$ git config --global user.name "ssyypp321"
+$ git config --global user.email "ssyypp321@gmail.com"
+
+확인
+$ git config --global user.name
+$ git config --global user.email
+
+계정 초기화
+$ git config --global --unset user.name
+$ git config --global --unset user.email
+
+확인
+$ git config --global --list
+
+
+git 기본 branch 세팅
+$ git config --global init.defaultBranch main
+(기본 브랜치 명이 main임)
+
+
+디렉터리를 git repository로 변환
+$ git init
+
+
+.git: git으로 관리하는 내역들이 저장되는 곳
+ - 지울 시, 복구 불가.
+
+
+git status
+ - 추적되지 않은 파일들: Git이 아직 관리하지 않는 파일들을 보여줌
+ - 변경된 파일들: 추적하고 있는 파일 중 수정되었으나 아직 스테이징되지 않은 파일들을 보여줌
+ - 스테이징된 파일들: 다음 커밋에 포함될 준비가 된, 즉 git add를 통해 스테이징된 파일 목록을 보여 줌
+
+
+git 예외처리 방법 = .gitignore
+
+.gitignore
+ - #: 주석
+ - secrets.yaml: 파일 이름을 지정하여 예외
+ - /secrests.yaml: 최상의 폴더의 파일
+ - *.yaml: 확장자로 지정하여 예외
+ - !main.yaml: yaml 확장자지만 무시하지 않을 파일
+ - logs: log란 이름의 파일, 폴더 그 내용들
+ - logs/: logs란 이름의 폴더와 그 내용들
+ - logs/*.txt: logs 폴더 안에 txt파일들
+
+
+commit의 이해
+ - commit: 변경 사항을 Git저장소의 영구적으로 기록하는 작업
+ - Working Directory: 소스코드 작업하는 영역, 내가 작업하고 있는 프로젝트의 디렉토리
+ - Staging Area: 워킹 디렉토리에서 git add 명령어를 통해 추가한 파일들이 모여 있는 공간
+ - Repository: Staging Area에 있는 소스코드들이 commit 명령을 실행하면 최종적으로 Git 저장소에 반영됨
+
+git 단계
+[Working Directory] →(git add) [Staging Area]  →(git commit) [Repository]
+
+
+파일의 생명주기
+ - Untracked: Working Directory에 있는 파일이지만 Git으로 버전관리를 하지 않는 상태, 파일이 있으나 한번도 add 되지 않은 상태
+ - Unmodified: 신규로 파일이 추가되었을 때, new file 상태와 같음, 파일을 add하여 commit을 1회 이상 한 뒤, 수정사항 없음
+ - Modified: 파일이 추가된 이후 해당 파일이 수정되었을 때의 상태
+ - Staged: Staging Area에 반영된 상태, git add 한 상태
+
+$ git commit a.txt -m "test"
+
+
+이전 버전으로 원복하기
+reset: 원하는 시점으로 돌아간 뒤 이후 내역들 삭제.
+revert: 되돌리기 원하는 시점의 커밋을 거꾸로 실행.
+
+
+reset 사용법
+$ git reset --soft [commit ID]
+$ git reset --mixed [commit ID]
+$ git reset --hard [commit ID]
+
+revert 사용법
+$ git revert [commit ID]
+
+
+AWS의 핵심 서비스 개요
+컴퓨팅 서비스
+ - EC2, Lambda
+
+스토리지 서비스
+ - S3, EBS
+
+네트워크 및 콘텐츠 전송
+ - VPC, Route 53, CloudFront
+
+데이터베이스 서비스
+ - RDS, DynamoDB
+
+보안 및 접근관리
+ - IAM, Security Group
+
+
+# branch 명령어
+브랜치 목록 확인
+$ git branch
+
+브랜치 생성
+$ git branch test
+
+브랜치 이동
+$ git switch test
+
+브랜치 생성 + 이동
+$ git switch -c test
+
+브랜치 이름 수정
+$ git branch -m test test2
+
+브랜치 삭제
+$ git branch -d test
+
+
+Merge
+leader 브랜치를 main 브랜치로 merge
+$ git merge leader
+
+merge 취소하기
+$ git reset -hard ...
+
+병합된 브랜치 삭제
+$ git branch -d leader
+
+
+rebase: 기반을 다시 설정하다.
+ - manager 브랜치를 main 브랜치 위로 rebase하면, manager 브랜치 커밋들이 main의 최신 커밋 위에 다시 쌓임
+
+
+# rebase중 충돌 시
+$ git rebase --abort
+(rebase 전으로 복구)
+
+
+GitHub: 원격 저장소
+
+git push: 로컬 저장소에서 만든 변경 사항(커밋)을 원격 저장소로 업로드, 로컬에서 원격으로 데이터 전송, 코드 공유 및 협업 필수
+
+git pull: 원격 저장소의 변경 사항을 로컬 저장소로 가져오는 명령어
+
+
+Access Token: github에 접근하기 위한 방법
+
+
+
+리전(Region): 가장 큰 단위, 리전 안에 다양한 가용영역이 존재함
+ - AWS의 서비스가 제공되는 서버의 물리적인 위치
+
+가용영역
+ - 리전의 하부 단위
+	- 하나의 리전은 2개 이상의 가용영역으로 구성
+	- AZ라 부름
+	- 1개 이상의 물리 데이터 센터를 묶은 논리적 데이터 센터
+ - 가용영역 구성
+	- 하나 이상의 데이터 센터로 구성
+	- AZ간의 연결은 매우 빠른 전용 네트워크로 구성
+	- 반드시 물리적으로 일정 거리 떨어져 있음
+	- 다만 모든 AZ는 서로 100km이내의 거리에 위치
+	- 여러 재해에 대한 대비 및 보안
+
+
+AWS에는 서비스가 제공되는 지역의 기반에 따라 글로벌 서비스와 리전 서비스로 분류
+글로벌 서비스
+ - 데이터 및 서비스를 전 세계의 모든 인프라가 공유
+ - ex) IAM, Route53, WAF, Billing
+
+지역 서비스
+ - 특정 리전을 기반으로 데이터 및 서비스를 제공
+ - 대부분 지역 서비스
+
+
+IAM: AWS 리소스에 대한 접근을 안전하게 제어하는 서비스
+ - 누가 어떤 AWS 서비스에 어떤 권한으로 접근할 수 있는지를 관리하는 역할
+
+IAM 요소
+ - 사용자(User): AWS 리소스에 접근하는 개별 계정
+ - 그룹(Group): 여러 사용자에게 동일한 권한을 부여할 수 있는 그룹
+ - 역할(Role): 특정 권한을 임시적으로 부여하는 역할
+ - 정책(Policy): JSON 형식으로 작성된 접근 권한 규칙
+ - MFA(Multi-Factor Authentication): 다중 인증으로 보안 강화
+
+IAM 주요기능
+ - AWS 리소스 접근 제어
+ - 정책 기반 접근 관리
+ - IAM 역할 및 서비스 연동
+ - MFA 적용 가능
+ - AWS 루트 계정 보호
+
+IAM 사용 시 주의할 점
+ - 루트 계정 (root는 최소한으로 사용)
+ - 최소 권한 원칙 (Least Privilege Principle) 준수 → 꼭 필요한 권
+한만 부여
+ - IAM 액세스 키 (access key) 노출 금지 → GitHub 등 코드 저장
+소에 올리지 않기
+ - IAM 정책을 잘못 설정하면 보안 사고 발생 가능 → 사용자별 최
+소 권한 유지
+
+요약
+# 리전 vs 가용영역	
+리전=지리적 위치
+가용영역=격리된 데이터센터, 고가용성
+
+# 글로벌 vs 리전	
+글로벌=전역 공유
+리전=특정 지역 종속
+
+# 사용자 vs 역할
+사용자=사람
+역할=임시 권한 위임(서비스/인스턴스)
+
+# 최소 권한의 원칙
+루트 계정 사용 자제, 액세스 키 유출 방지, MFA 필수
+
+"루트 계정"이라는 단어가 나오면 무조건 "사용 자제", "MFA 활성화"를 떠올리세요.
+"애플리케이션에 권한을 주려면"이라는 문구가 나오면 "IAM 역할(Role)"이 답일 확률이 99%입니다.
+"사용자에게 권한을 주려면"이라는 문구가 나오면 "최소 권한 정책(Policy)"이 답입니다.
+
+
+키페어: EC2 인스턴스에 안전하게 접속하기 위한 인증 수단으로, 생성 시 다운로드하며 접속할 때 반드시 필요합니다.
+
+
+인스턴스 상태
+• running (실행 중)
+• stopped (중지 됨)
+• terminated(종료 됨)
+• pending (대기 중)
+• stopping (중지 중)
+• rebooting (재부팅)
+• shutting-donw (종료 중)
+
+
+인스턴스 삭제/중지 차이
+ - 중지: 인스턴스를 잠시 끄는 것(일시 정지)으로, 나중에 다시 시작할 수 있습니다.
+
+ - 삭제(종료): 인스턴스를 완전히 제거하는 것으로, 저장된 데이터가 사라지고 다시 시작할 수 없습니다.
+
+
+SG(보안 그룹) 수정: 인스턴스의 방화벽 역할을 하며, 인스턴스 생성 후에도 필요한 포트(예: HTTP 80)를 추가하거나 제거하는 등 규칙을 수정할 수 있습니다.
+
+
+CloudWatch 모니터링: AWS 콘솔의 EC2 대시보드나 CloudWatch 서비스 메뉴에서 인스턴스의 CPU 사용량, 네트워크 트래픽 등 실시간 성능 데이터를 확인할 수 있습니다.
+
+
+S3 내구성&가용성
+내구성: 파일을 잃어버리지 않을 능력
+가용성: 내가 원할 때 그 파일을 쓸 수 있는 능력
+
+
+버킷
+ - S3에서 저장공간을 구분하는 단위
+ - 전 세계 고유 이름을 가져야 함
+ - 한 번 생성 시, 이름 변경 불가
+
+객체: S3에 저장되는 기본 매체
+ - Owner: 소유자 정보
+ - Key: 객체 이름
+ - Value: 파일 데이터 자체
+ - Version ID: 파일 버전 식별자
+ - Metadata: 파일 관련 정보
+
+
+IAM 정책: 사용자나 역할에 부여하는 '자격 증명 기반' 정책입니다.
+
+버킷 정책: 리소스(S3)에 직접 부여하는 '리소스 기반' 정책으로, 특정 버킷의 접근 권한을 관리합니다.
+
+
+"왜일까?"(AccessDenied): S3 버킷에 객체를 업로드해도 기본적으로는 Private(비공개) 상태이기 때문에 웹브라우저로 URL에 접속하면 접근이 거부됩니다. 이를 해결하기 위해 버킷 정책을 수정해야 합니다
+
+
+
+allow 허용, deny: 거절
+get 가져오기
+
+
+{
+"Effect": "Allow",
+"Principal": "*",
+"Action": "s3:GetObject",
+"Resource": "arn:aws:s3:::demo.rwlecture.com/*"
+}
+
+특정 폴더 다운로드 제한: Effect를 Deny로 설정하고 Resource에 해당 경로(예: .../class/test/*)를 지정하면 해당 폴더의 데이터를 가져오는 행위를 차단할 수 있습니다.
+
+
+10 페이지: aws s3 ls는 버킷 목록을 확인하고, aws s3 ls s3://버킷이름/은 해당 버킷 내부의 파일 목록을 확인하는 명령어입니다.
+
+11 페이지: aws s3 cp [로컬경로] [s3경로]는 파일 업로드, 반대로 [s3경로] [로컬경로]는 파일 다운로드입니다.
+
+12 페이지: --recursive 옵션을 사용하면 디렉터리(폴더) 단위로 한꺼번에 업로드하거나 다운로드할 수 있습니다.
