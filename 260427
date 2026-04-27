@@ -1,0 +1,154 @@
+Spring Boot
+ - 독립실행형 Spring 애플리케이션 지원
+ - 내장 서블릿 컨테이너 (Tomcat, Jetty, Undertow) 사용
+ - 빌드 구성을 단순화하기 위해 스타터 종속성을 사용
+ - Spring 및 타사 라이브러리를 자동 구성함
+ - XML 구성이 필요하지 않음
+
+
+스프링 웹 MVC
+ - 스프링이 제공하는 웹 애프리케이션 개발 전용 프레임워크
+ - MVC(모델, 뷰, 컨트롤러) 패턴을 사용
+ - 웹 애플리케이션의 모델, 뷰, 컨트롤러 사이의 의존 관계 및 처리 흐름을 스프링 컨테이너가 관리
+ - 스프링이 제고하는 많은 기능으 확장하여 웹 애플리케이션 구축이 가능
+
+
+스프링 웹 MVC의 기본 구성 요소
+디스패처서블릿: 클라이언트로부터 요청을 전달받아, 컨트롤러에 전달하고, 컨트롤러가 반환한 결과 값을 뷰애 전달하여 사용자에게 보여줄 응답을 생성 하는 등의 모든 절차(흐름)을 담당.
+
+핸들러 매핑: 클라이언트의 요청 URL 에 대해 어떤 컨트롤러가 처리할지를 결정
+
+핸들러 어댑터: 핸들러 매핑 클래스에 의해 결정된 컨트롤러를 호출
+
+컨트롤러: 클라이언트의 요청을 처리한 뒤 결과를 반환. 응답 결과에서 보여줄 데이터를 모델에 담아서 뷰로 전달
+
+모델&뷰: 컨트롤러가 처리한 결과 정보 및 뷰 선택에 필요한 정보를 담는 객체
+
+뷰 리졸버: 컨트롤러의 처리 결과를 사용자에게 보여줄 뷰를 결정.
+
+뷰: 컨트롤러의 처리 결과 화면을 생성. JSP를 비롯한 다양한 뷰 템플릿 엔진이 사용됨.
+
+
+Spring Web MVC 프로젝트 구조
+자바 파일
+각종 자원의 디렉토리
+테스트 관련 자바 및 설정 파일
+라이브러리 참조
+정적 파일
+웹 프로젝트 관련 파일
+Spring MVC 환경 설정 파일
+JSP 파일
+웹 프로젝트 환경 설정 파일
+Maven 빌드를 위한 디렉터리
+Maven 환경 설정 파일
+
+
+프로젝트 실행과정
+1. 웹 브라우저
+2. Tomcat: web.xml
+3. Spring: servelt-context.xml
+4. Spring: HomeController.java
+5. Spring: servlet-context.xml
+6. Tomcat + Spring: home.jsp
+
+
+Spring MVC 환경 설정 파일
+root-context.xml
+ - 다른 웹 컴포넌트들과 공유하는 자원들을 설정
+ - 뷰와 관련되지 않은 Service, Repository(DAO), DB 등 객체를 정의
+ - 공통 Bean 을 설정하며 주로 뷰 지원을 제외한 Bean 객체를 설정
+
+servlet-context.xml
+ - 웹 요청을 직접 처리할 컨트롤러의 매핑을 설정하거나 뷰를 어떻게 처리할지 설정
+
+
+<resources mapping="/resources/**" location="/resources/" />
+
+
+뷰 매핑 설정
+접두사 + View이름 + 접미사 = /WEB-INF/views/home.jsp(실제 View의 위치)
+
+
+종속성 범위 종류
+ - compile
+ - provided
+ - runtime
+ - test
+ - system
+ - import
+
+
+계층적 구조
+ - 전체 애플리케이션을 관심사에 따라 계층별로 분리한 구조
+ - 각 계층이 느슨하게 결합됨
+ - 웹 애플리케이션을 좀 더 효율적으로 개발하고 개발 후 유지보수를 쉽게 하기 위해 시스템 구조를 계층화하여 개발
+ - 계층적으로 구조를 분리하지 않고 한 곳에서 모든 작업을 처리하면 많은 문제가 발생
+
+종류
+ - 도메인 객체
+ - 퍼시스턴스 계층
+ - 서비스 계층 = 비즈니스 계층
+ - 프레젠테이션 계층 = 표현 계층
+
+계층적 구조를 적용한 구현 과정
+
+도메인 객체 > 퍼시스턴스 계층 > 서비스 계층 > 프레젠테이션 계층(컨트롤러 > 뷰)
+
+
+Log4j 로깅 레벨
+FATAL: 조기 종료를 유발하는 심각한 오류가 많은 상태
+ERROR: 기타 런타임 오류 또는 예기치 않은 상태
+WARN: 사용되지 않는 API 사용. API의 사용 빈도, 오류, 예기치 않은 런타임 상황의 경고성 메시지
+INFO: 시작, 종료 같은 런타임 이벤트 메시지
+DEBUG: 디버그 용도로 시스템 흐름에 대한 자세한 정보
+TRACE: 가장 하위 로깅 레벨로, 모든 로그에 대한 상세한 정보
+
+
+Spring JDBC
+ - JDBC 추상화를 제공하는 Spring Framework의 모듈
+
+
+db-properties를 Spring에서 로드
+ - context:property-placeholder 요소를 통해 설정
+ - 배포 대상에 따라 변경될 수 있는 설정은 별도의 설정 파일에 값을 정의하고 property-placeholder로 로드하여 설정함
+
+
+servlet-context.xml
+src /main/webapp/WEB INF/spring/servlet context.xml
+
+
+component-scan 수동 설정
+<beans:bean
+class com.springmvc.controller.HomeController />
+
+<beans:bean id="bookRepository"
+class com.springmvc.repository.BookRepositoryImpl" />
+
+<beans:bean id="bookService"
+class com.springmvc.service.BookServiceImpl ">
+	<beans:property name bookRepository"
+ref bookRepository" />
+</beans:bean>
+
+<beans:bean
+class com.springmvc.controller.BookController">
+	<beans:property name bookService ref bookService" /> 
+</beans:bean>
+
+
+메소드 수준의 @RequestMapping 단순화
+GET
+POST
+PUT
+DELETE
+PATCH
+
+
+요청 처리 메소드 (Handler Method)
+ - Spring Web MVC 에서 사용자 요청을 처리하는 메소드
+ - @RequestMapping 에 설정된 경로의 요청을 처리하는 메소드
+
+
+Model 인터페이스
+ - 사용자 요청의 처리 결과를 뷰에 전달하는데 필요한 데이터는
+Model 객체의 addAttribute () 메소드를 이용하여 Model 에 추가
