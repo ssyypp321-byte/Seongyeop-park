@@ -1,0 +1,13 @@
+class Ingredient {
+  final String id;
+  final String name;
+  final DateTime expirationDate;
+  final String category; // 예: 냉장, 냉동, 실온
+
+  Ingredient({
+    required this.id,
+    required this.name,
+    required this.expirationDate,
+    required this.category,
+  });
+}
